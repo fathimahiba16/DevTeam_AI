@@ -1,6 +1,8 @@
+
 import streamlit as st
 
 from auth import create_users_table, create_user, verify_user
+from orchestrator import Orchestrator
 
 
 # --------------------------------------------------
@@ -192,15 +194,26 @@ def show_main_page():
 
         if requirement.strip():
 
-            st.success("Development request received!")
+            try:
+                with st.spinner(
+                    "🤖 Requirement Agent and Architect Agent are working..."
+                ):
 
-            st.write("### Your Requirement")
-            st.write(requirement)
+                    team = Orchestrator(provider="gemini")
+                    result = team.run(requirement)
 
-            st.info(
-                "Next step: Requirement Agent will analyze "
-                "this request."
-            )
+                st.success(
+                    "✅ Requirement analysis and architecture completed!"
+                )
+
+                st.subheader("📋 Generated Requirements")
+                st.markdown(result["requirements"])
+
+                st.subheader("🏗️ Software Architecture")
+                st.markdown(result["architecture"])
+
+            except Exception as e:
+                st.error(f"Development failed: {e}")
 
         else:
             st.warning(
