@@ -212,6 +212,20 @@ def show_main_page():
                 st.subheader("🏗️ Software Architecture")
                 st.markdown(result["architecture"])
 
+                st.subheader("💻 Generated Source Code")
+                st.code(
+                result["generated_code"],
+                        language="markdown"
+                )
+
+                st.subheader("📁 Saved Project Files")
+
+                st.success("Generated files saved successfully!")
+
+                for filename in result["saved_files"]:
+                    st.write(f"📄 {filename}")
+
+
             except Exception as e:
                 st.error(f"Development failed: {e}")
 
