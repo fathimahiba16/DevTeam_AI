@@ -27,3 +27,39 @@ Follow these rules:
 Generate the application files now.
 """
         return self.llm.generate(prompt)
+
+    
+    def fix_code(self, generated_code, test_errors):
+        """
+        Ask the AI to repair code based on testing errors.
+        """
+
+        prompt = f"""
+You are an expert Python developer.
+
+The following application was generated earlier:
+
+{generated_code}
+
+The Testing Agent reported these errors:
+
+{test_errors}
+
+Fix the errors in the application.
+
+IMPORTANT RULES:
+1. Return the COMPLETE corrected application.
+2. Include ALL files, even files that did not change.
+3. Use this exact format for every file:
+
+### `filename.py`
+```python
+# Complete file contents here
+```
+
+4. Include requirements.txt and test files.
+5. Do not include explanations outside the file blocks.
+6. Preserve existing features while fixing the errors.
+"""
+
+        return self.llm.generate(prompt)

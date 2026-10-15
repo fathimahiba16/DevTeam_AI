@@ -223,3 +223,13 @@ __marimo__/
 users.db
 
 workspace/
+
+# DevTeam AI additional protections
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.pdf
+*.zip
